@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - HOVE Supermarket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+        .container {
+            width: 90%;
+            margin: 2rem auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+        }
+        .remove-btn {
+            background-color: #FF5733;
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .total {
+            text-align: right;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+        }
+        .checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Your Cart</h1>
+</header>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+        </tbody>
+    </table>
+    <div class="total">
+        Total: Rs. <span id="total-price">0</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    <a href="fish-meat.html" class="back-btn">⬅ Continue Shopping</a>
+</div>
+
+<script>
+    function loadCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartTable = document.getElementById("cart-items");
+        let totalPrice = 0;
+
+        // Clear previous items
+        cartTable.innerHTML = "";
+
+        // Load items into the cart table
+        cart.forEach((item, index) => {
+            let row = `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td><button class="remove-btn" onclick="removeItem(${index})">Remove</button></td>
+                </tr>
+            `;
+            cartTable.innerHTML += row;
+            totalPrice += item.price;
+        });
+
+        // Display the total price
+        document.getElementById("total-price").innerText = totalPrice;
+    }
+
+    // Remove item from the cart
+    function removeItem(index) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.splice(index, 1);  // Remove item at index
+        localStorage.setItem("cart", JSON.stringify(cart));  // Update localStorage
+        loadCart();  // Reload the cart after removal
+    }
+
+    // Checkout function (optional for your use case)
+    function checkout() {
+        alert("Proceeding to checkout...");
+        localStorage.removeItem("cart"); // Clear the cart after checkout
+        loadCart(); // Reload the cart (this will now be empty)
+    }
+
+    // Load cart items when the page is loaded
+    window.onload = loadCart;
+</script>
+
+</body>
+</html>

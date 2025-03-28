@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - HOVE Supermarket</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .container {
+            width: 80%;
+            margin: 3rem auto;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #333;
+        }
+        h3 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+        }
+        .order-details p {
+            font-size: 1.2rem;
+            color: #555;
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .contact-info {
+            font-size: 1.1rem;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+        .contact-info a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .back-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    🛒 Order Confirmation
+</header>
+
+<div class="container">
+    <h2>Thank you for your order!</h2>
+    <h3>Order Details:</h3>
+    <div class="order-details">
+        <p><strong>Items Ordered:</strong></p>
+        <ul id="order-items"></ul>
+        <p><strong>Total Price:</strong> Rs. <span id="total-price"></span></p>
+    </div>
+
+    <div class="contact-info">
+        <p>If you have any questions or need assistance, feel free to contact us:</p>
+        <p><strong>Phone:</strong> <a href="tel:+94712357154">0712357154</a></p>
+        <p><strong>Email:</strong> <a href="mailto:venukavithanage20@gmail.com.com">venukavithanage20@gmail.com</a></p>
+    </div>
+
+    <a href="cart.html" class="back-btn">⬅ Go Back to Cart</a>
+    <div class="error-message" id="error-message"></div>
+</div>
+
+<script>
+    window.onload = function() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // If the cart is empty, show an error message
+        if (cart.length === 0) {
+            document.getElementById("error-message").innerText = "Your cart is empty. Please add items before proceeding.";
+            return;
+        }
+
+        let orderItems = "";
+        let totalPrice = 0;
+
+        cart.forEach(item => {
+            orderItems += `<li>${item.name} - Rs. ${item.price}</li>`;
+            totalPrice += item.price;
+        });
+
+        document.getElementById("order-items").innerHTML = orderItems;
+        document.getElementById("total-price").innerText = totalPrice;
+    };
+</script>
+
+</body>
+</html>
